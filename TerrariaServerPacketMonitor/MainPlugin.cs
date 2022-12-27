@@ -69,8 +69,8 @@ namespace TerrariaServerPacketMonitor
         {
             
             {
-                Receive.Sort((x, y) => y.value.CompareTo(x.value));
-                Send.Sort((x, y) => y.value.CompareTo(x.value));
+                Receive.Sort((x, y) => y.Count.CompareTo(x.Count));
+                Send.Sort((x, y) => y.Count.CompareTo(x.Count));
 				List<string> SendlegendData = new List<string>();
 				foreach (Packet pac in Send)
 				{

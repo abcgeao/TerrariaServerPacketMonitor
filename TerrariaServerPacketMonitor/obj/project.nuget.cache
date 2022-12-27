@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "1R9TSgg9+ntUD3KySKaO7WhpOLZCQEyHrcqLzGX2WmyeI/ArJN7rjCOfuG/2NQUNJe2lPcYex/Gt3yTwNICJFA==",
+  "success": true,
+  "projectFilePath": "D:\\GitHub\\TerrariaServerPacketMonitor\\TerrariaServerPacketMonitor.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jonesn\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
