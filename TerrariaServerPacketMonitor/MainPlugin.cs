@@ -104,7 +104,7 @@ namespace TerrariaServerPacketMonitor
             var data = Receive.Find(x => x.Type == args.MsgID);
             if ( data== null)
             {
-                Receive.Add(new Packet() { Type = args.MsgID, Count = 1, value = args.Msg.totalData, name = args.MsgID.ToString() });
+                Receive.Add(new Packet() { Type = args.MsgID, Count = 1, value = args.Msg.totalData, name = args.MsgID.ToString() + "(" + (int)args.MsgID + ")" });
             }
             else
             {
