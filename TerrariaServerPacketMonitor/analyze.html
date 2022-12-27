@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="height: 100%">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
+</head>
+<body style="height: 100%; margin: 0">
+<div class="mdui-container" style="height: 100%">
+    <div class="mdui-container" style="padding-top:50px">
+	<div class="mdui-typo-display-1" style="padding-bottom:20px">数据包分析(Packet Monitor)</div>
+        <div class="mdui-table-fluid">
+            <table class="mdui-table mdui-table-hoverable">
+                <tbody>
+                <tr>
+                    <td>收到的数据包数量(Received Packages)</td>
+                    <td id="recp"></td>
+                </tr>
+                <tr>
+                    <td>收到的数据包总大小(Received Data)</td>
+                    <td id="recd"></td>
+                </tr>
+                <tr>
+                    <td>发送的数据包数量(Sent Packages)</td>
+                    <td id="sentp"></td>
+                </tr>
+                <tr>
+                    <td>发送的数据包总大小(Sent Data)</td>
+                    <td id="sentd"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="send" style="height: 100%;padding-top:50px"></div>
+    <br>
+    <div id="receive" style="height: 100%;padding-top:50px"></div>
+	<div class="mdui-typo">
+		<hr/>
+	</div>
+	<div class="mdui-typo-subheading-opacity" style="padding:20px">Coder:<a href="https://github.com/abcgeao">Jonesn</a>&emsp;Chart:<a href="https://echarts.apache.org/">ECharts</a>&emsp;UI:<a href="https://www.mdui.org/">MDUI</a></div>
+</div>
+<script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.1/dist/echarts.min.js"></script>
+<script src="analyze.js"></script>
+<script type="text/javascript">
+    var dom = document.getElementById('send');
+    var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    var app = {};
+    var option;
+    const data = htmlobj;
+    $('#recp')[0].innerHTML = data.ReceivePackets;
+    var num = data.ReceiveBytes / 1048576;
+    num = num.toFixed(2);
+    $('#recd')[0].innerHTML = data.ReceiveBytes + ' (about <strong>' + num + '</strong> MB)';
+    $('#sentp')[0].innerHTML = data.SendPackets;
+    num = data.SendBytes / 1048576;
+    num = num.toFixed(2);
+    $('#sentd')[0].innerHTML = data.SendBytes + ' (about <strong>' + num + '</strong> MB)';
+    ;
+    option = {
+        title: {
+            text: '发送的数据包统计数据(Sent)',
+            subtext: '单位:byte',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: data.SendLegendData
+        },
+        series: [
+            {
+                name: '数据包类型',
+                type: 'pie',
+                radius: '55%',
+                center: ['40%', '50%'],
+                data: data.SendSeriesData,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+    window.addEventListener('resize', myChart.resize);
+
+    var dom = document.getElementById('receive');
+    var myChart = echarts.init(dom, null, {
+        renderer: 'canvas',
+        useDirtyRect: false
+    });
+    var app = {};
+    var option;
+    option = {
+        title: {
+            text: '接收到的数据包统计数据(Received)',
+            subtext: '单位:byte',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            data: data.ReceiveLegendData
+        },
+        series: [
+            {
+                name: '数据包类型',
+                type: 'pie',
+                radius: '55%',
+                center: ['40%', '50%'],
+                data: data.ReceiveSeriesData,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+    window.addEventListener('resize', myChart.resize);
+</script>
+</body>
+</html>
